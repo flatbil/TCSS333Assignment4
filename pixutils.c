@@ -164,3 +164,6 @@ int pixMap_write(pixMap *p,char *filename){
 	}
 	return 0;
 }	 
+void pixMap_write_bmp16(pixMap *p, char *filename){
+	
+}

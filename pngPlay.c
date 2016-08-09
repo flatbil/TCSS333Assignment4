@@ -19,9 +19,17 @@ int main(int argc, char *argv[]){
 				inputfile=argv[i+1];
 				i+=2;
 			}	
-	  else if(strcmp(argv[i],"-o")==0){
+			else if(strcmp(argv[i],"-o")==0){
 				outputfile=argv[i+1];
 			 i+=2;
+			}
+			else if(strcmp(argv[i],"-b") == 0){ 
+				grayFlag=1;
+				i++;
+			}
+			else if(strcmp(argv[i],"-s") == 0){ 
+				grayFlag=1;
+				i++;
 			}
 			else{
 				fprintf(stderr,"pngPlay -g -r degrees -i inputfile -o outputfile  ");
@@ -31,6 +39,7 @@ int main(int argc, char *argv[]){
   pixMap *p=pixMap_init_filename(inputfile);
   if(degrees)pixMap_rotate(p,degrees);
   if(grayFlag)pixMap_gray(p);
+  if
   pixMap_write(p,outputfile);
   pixMap_destroy(p);
   return 0;
