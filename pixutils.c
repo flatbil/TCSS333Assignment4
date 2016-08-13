@@ -158,6 +158,7 @@ void pixMap_gray (pixMap *p){
 }
 int pixMap_write(pixMap *p,char *filename){
 	int error=0;
+	//FILE *outfile = fopen(filename, "wb"); 
  if(lodepng_encode32_file(filename, p->image, p->width, p->height)){
   fprintf(stderr,"error %u: %s\n", error, lodepng_error_text(error));
   return 1;
@@ -165,5 +166,18 @@ int pixMap_write(pixMap *p,char *filename){
 	return 0;
 }	 
 void pixMap_write_bmp16(pixMap *p, char *filename){
-	
+	BMP16_map *bmp = BMP16_map_init(p->height,p->width,0,5,6, 5);
+	for(int i = p->height; i > 0; i--){
+		for(int j = 0; j < p->width; i++){
+			uint16_t red = p->pixArray[i][j].r >> 5;
+			uint16_t green = p->pixArray[i][j].g >> 6;
+			uint16_t blue = p->pixArray[i][j].b >> 5;
+			uint16_t rgb = (red <<(11)) | (green <<(5)) | (blue);
+			//I don't know if this is the correct way.
+			bmp->pixArray[i][j] = rgb;
+		}
+	}
+	//This is questionable. Did I output? Or does that happen by it self?
+	pixMap_write(bmp, filename);
+	pixMap_destroy(bmp);
 }

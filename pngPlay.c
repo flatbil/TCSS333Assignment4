@@ -4,6 +4,8 @@ int main(int argc, char *argv[]){
   char *inputfile=0,*outputfile=0;
   float degrees=0;
   char grayFlag=0;
+  char sortFlag = 0;
+  char saveFlag = 0;
   int i=1;
   while (i<argc){
 			//check for flags -i -o -f -d 
@@ -24,11 +26,11 @@ int main(int argc, char *argv[]){
 			 i+=2;
 			}
 			else if(strcmp(argv[i],"-b") == 0){ 
-				grayFlag=1;
+				saveFlag=1;
 				i++;
 			}
 			else if(strcmp(argv[i],"-s") == 0){ 
-				grayFlag=1;
+				sortFlag=1;
 				i++;
 			}
 			else{
@@ -39,7 +41,7 @@ int main(int argc, char *argv[]){
   pixMap *p=pixMap_init_filename(inputfile);
   if(degrees)pixMap_rotate(p,degrees);
   if(grayFlag)pixMap_gray(p);
-  if
+  if(saveFlag)
   pixMap_write(p,outputfile);
   pixMap_destroy(p);
   return 0;
