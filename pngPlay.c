@@ -39,9 +39,10 @@ int main(int argc, char *argv[]){
 			}	
 		}		
   pixMap *p=pixMap_init_filename(inputfile);
-  if(degrees)pixMap_rotate(p,degrees);
-  if(grayFlag)pixMap_gray(p);
-  if(saveFlag)
+  if(degrees) pixMap_rotate(p,degrees);
+  if(grayFlag) pixMap_gray(p);
+  if(sortFlag) pixMap_sort(p);
+  if(saveFlag) pixMap_write_bmp16(p, outputfile);
   pixMap_write(p,outputfile);
   pixMap_destroy(p);
   return 0;

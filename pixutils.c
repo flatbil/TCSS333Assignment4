@@ -1,5 +1,6 @@
 #include "pixutils.h"
 #include "lodepng.h"
+#include "bmp.h"
 
 //private methods
 static pixMap *pixMap_init(); //allocate memory for pixMap and set variables to zero
@@ -172,17 +173,17 @@ void pixMap_write_bmp16(pixMap *p, char *filename){
 			uint16_t green = p->pixArray[i][j].g >> 6;
 			uint16_t blue = p->pixArray[i][j].b >> 5;
 			uint16_t rgb = (red <<(11)) | (green <<(5)) | (blue);
-			//I don't know if this is the correct way.
 			bmp->pixArray[i][j] = rgb;
 		}
 	}
-	//This is questionable. Did I output? Or does that happen by it self?
-	pixMap_write(bmp, filename);
-	pixMap_destroy(bmp);
+	BMP16_write(bmp, filename);
+	BMP16_map_destroy(bmp);
 }
-void BMP16_sort(pixMap *p){
-	qsort(p->image,p->width->p->height,sizeof(rgba), BMP16_cmp);
+void pixMap_sort(pixMap *p){
+	qsort(p->image,p->width*p->height,sizeof(rgba), pixMap_cmp);
 }
-int  BMP16_cmp(const void *a, const void *b){
-	
+int  pixMap_cmp(const void *a, const void *b){
+	const rgba *ra =(rgba*) a;
+	const rgba *rb =(rgba*) b;
+	return(ra->r - rb->r);
 }
