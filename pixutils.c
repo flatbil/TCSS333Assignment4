@@ -158,7 +158,6 @@ void pixMap_gray (pixMap *p){
 }
 int pixMap_write(pixMap *p,char *filename){
 	int error=0;
-	//FILE *outfile = fopen(filename, "wb"); 
  if(lodepng_encode32_file(filename, p->image, p->width, p->height)){
   fprintf(stderr,"error %u: %s\n", error, lodepng_error_text(error));
   return 1;
@@ -180,4 +179,10 @@ void pixMap_write_bmp16(pixMap *p, char *filename){
 	//This is questionable. Did I output? Or does that happen by it self?
 	pixMap_write(bmp, filename);
 	pixMap_destroy(bmp);
+}
+void BMP16_sort(pixMap *p){
+	qsort(p->image,p->width->p->height,sizeof(rgba), BMP16_cmp);
+}
+int  BMP16_cmp(const void *a, const void *b){
+	
 }
